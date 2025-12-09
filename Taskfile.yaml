@@ -25,8 +25,3 @@ tasks:
     desc: Generate Terraform documentation
     cmds:
       - terraform-docs markdown . --output-file README.md
-
-  update-docs:
-    desc: Update documentation
-    deps: [tf-docs]
-    cmd: gemini -i .github/prompts/update-documentation.prompt.md
