@@ -12,7 +12,7 @@ The module handles:
 ```hcl
 module "service_bot" {
   source  = "c0x12c/helm-service-bot/aws"
-  version = "0.1.0"
+  version = "0.2.0"
 
   cluster_name      = "my-eks-cluster"
   eks_oidc_provider = {
@@ -22,6 +22,7 @@ module "service_bot" {
   region            = "us-east-1"
   route53_zone_id   = "Z0123456789ABCDEF"
   alb_dns           = "my-alb-dns-name.us-east-1.elb.amazonaws.com"
+  environment       = "dev"
 
   # Slack Configuration
   slack_signing_secret  = var.slack_signing_secret
@@ -29,6 +30,7 @@ module "service_bot" {
   slack_user_token      = var.slack_user_token
   slack_bot_user_id     = "U12345678"
   allowed_slack_channel = "C12345678"
+  slack_channel_prefix  = "prj-spartan-"
 
   # GitHub Configuration
   github_org    = "my-org"
