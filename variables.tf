@@ -168,12 +168,14 @@ variable "atlassian_host" {
 variable "atlassian_username" {
   description = "Atlassian username"
   type        = string
+  default     = "spartan"
 }
 
 variable "atlassian_api_token" {
   description = "Atlassian API token"
   type        = string
   sensitive   = true
+  default     = null
 }
 
 variable "atlassian_page_path_prefix" {
@@ -210,12 +212,14 @@ variable "on_call_process_page_id" {
 variable "jenkins_username" {
   description = "Jenkins username"
   type        = string
+  default     = "spartan"
 }
 
 variable "jenkins_api_token" {
   description = "Jenkins API token"
   type        = string
   sensitive   = true
+  default     = null
 }
 
 variable "jenkins_host" {
