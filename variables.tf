@@ -1,7 +1,49 @@
-variable "service_name" {
-  description = "The name of the service"
+variable "http_client_log_level" {
+  description = "HTTP client log level"
   type        = string
-  default     = "service-bot"
+  default     = "INFO"
+}
+
+variable "spartan_chart_version" {
+  description = "Version of the Spartan Helm chart to deploy"
+  type        = string
+  default     = "0.1.18"
+}
+
+variable "service_bot_image_repository" {
+  description = "Docker image for the service bot"
+  type        = string
+  default     = "ghcr.io/spartan-stratos/service-bot"
+}
+
+variable "service_bot_image_tag" {
+  description = "Docker image tag for the service bot"
+  type        = string
+  default     = "v0.1.0"
+}
+
+variable "service_resources" {
+  description = "Kubernetes resource requests and limits for the service bot"
+  type        = map(map(string))
+  default = {
+    requests = {
+      cpu    = "200m"
+      memory = "1Gi"
+    }
+    limits = {
+      memory = "1Gi"
+    }
+  }
+}
+
+variable "region" {
+  description = "AWS region"
+  type        = string
+}
+
+variable "route53_zone_id" {
+  description = "Route53 hosted zone ID"
+  type        = string
 }
 
 variable "alb_dns" {
@@ -19,24 +61,18 @@ variable "eks_oidc_provider" {
   type        = object({ arn = string, url = string })
 }
 
-variable "namespace" {
-  description = "The namespace to deploy the service"
+variable "service_name" {
+  description = "The name of the service"
   type        = string
   default     = "service-bot"
 }
 
-variable "micronaut_env" {
+variable "environment" {
   description = "The micronaut environment"
   type        = string
-  default     = "dev"
 }
 
-variable "app_domain" {
-  description = "The application domain"
-  type        = string
-  default     = "example.com"
-}
-
+# Slack
 variable "slack_signing_secret" {
   description = "Slack signing secret"
   type        = string
@@ -65,10 +101,27 @@ variable "allowed_slack_channel" {
   type        = string
 }
 
+variable "slack_channel_prefix" {
+  description = "Slack channel prefix"
+  type        = string
+}
+
 variable "on_call_slack_channel" {
   description = "On-call Slack channel"
   type        = string
   default     = "on-call"
+}
+
+variable "namespace" {
+  description = "The namespace to deploy the service"
+  type        = string
+  default     = "service-bot"
+}
+
+variable "app_domain" {
+  description = "The application domain"
+  type        = string
+  default     = "example.com"
 }
 
 variable "slack_user_group_names" {
@@ -77,12 +130,7 @@ variable "slack_user_group_names" {
   default     = "dev-system"
 }
 
-variable "slack_channel_prefix" {
-  description = "Slack channel prefix"
-  type        = string
-  default     = "prj-spartan-"
-}
-
+# Github
 variable "github_org" {
   description = "GitHub organization name"
   type        = string
@@ -99,33 +147,22 @@ variable "infra_repo_list" {
   default     = []
 }
 
-variable "atlassian_host" {
-  description = "Atlassian host URL"
-  type        = string
-  default     = "https://example.atlassian.net"
-}
-
-variable "jenkins_username" {
-  description = "Jenkins username"
+variable "github_login" {
+  description = "GitHub login"
   type        = string
 }
 
-variable "jenkins_api_token" {
-  description = "Jenkins API token"
+variable "github_pat" {
+  description = "GitHub personal access token"
   type        = string
   sensitive   = true
 }
 
-variable "jenkins_host" {
-  description = "Jenkins host URL"
+# Atlassian & On-Call
+variable "atlassian_host" {
+  description = "Atlassian host URL"
   type        = string
-  default     = "https://jenkins.example.com"
-}
-
-variable "jenkins_repository" {
-  description = "Jenkins repository"
-  type        = string
-  default     = "jenkins-job-dsl-scripts"
+  default     = "https://example.atlassian.net"
 }
 
 variable "atlassian_username" {
@@ -169,61 +206,26 @@ variable "on_call_process_page_id" {
   default     = "41812488"
 }
 
-variable "github_login" {
-  description = "GitHub login"
+# Jenkins
+variable "jenkins_username" {
+  description = "Jenkins username"
   type        = string
 }
 
-variable "github_pat" {
-  description = "GitHub personal access token"
+variable "jenkins_api_token" {
+  description = "Jenkins API token"
   type        = string
   sensitive   = true
 }
 
-variable "http_client_log_level" {
-  description = "HTTP client log level"
+variable "jenkins_host" {
+  description = "Jenkins host URL"
   type        = string
-  default     = "INFO"
+  default     = "https://jenkins.example.com"
 }
 
-variable "spartan_chart_version" {
-  description = "Version of the Spartan Helm chart to deploy"
+variable "jenkins_repository" {
+  description = "Jenkins repository"
   type        = string
-  default     = "0.1.18"
-}
-
-variable "service_bot_image_repository" {
-  description = "Docker image for the service bot"
-  type        = string
-  default     = "ghcr.io/spartan-stratos/service-bot"
-}
-
-variable "service_bot_image_tag" {
-  description = "Docker image tag for the service bot"
-  type        = string
-  default     = "dev-20251208-7a4748f3"
-}
-
-variable "service_resources" {
-  description = "Kubernetes resource requests and limits for the service bot"
-  type        = map(map(string))
-  default = {
-    requests = {
-      cpu    = "200m"
-      memory = "1Gi"
-    }
-    limits = {
-      memory = "1Gi"
-    }
-  }
-}
-
-variable "region" {
-  description = "AWS region"
-  type        = string
-}
-
-variable "route53_zone_id" {
-  description = "Route53 hosted zone ID"
-  type        = string
+  default     = "jenkins-job-dsl-scripts"
 }

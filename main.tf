@@ -16,7 +16,7 @@ module "eks_service" {
 
     config_map = {
       # required config map entries
-      MICRONAUT_ENVIRONMENTS = var.micronaut_env
+      MICRONAUT_ENVIRONMENTS = var.environment
       HTTP_CLIENT_LOG_LEVEL  = var.http_client_log_level
       APP_DOMAIN             = var.app_domain
       SLACK_BOT_USER_ID      = var.slack_bot_user_id
@@ -149,7 +149,7 @@ resource "helm_release" "service_bot" {
       extraEnvs = [
         {
           name  = "ENVIRONMENT"
-          value = var.micronaut_env
+          value = var.environment
         }
       ]
     })
