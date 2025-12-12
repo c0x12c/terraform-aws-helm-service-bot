@@ -1,6 +1,11 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3.1]() (2025-12-12)
+
+### Fix Bugs
+* Move `create_kubernetes_namespace` out of `service` because it's a variables of `eks-service`
+
 ## [0.3.0]() (2025-12-12)
 
 ### Version Updating

@@ -57,9 +57,10 @@ module "eks_service" {
     }
 
     create_service_account      = true
-    create_kubernetes_namespace = true
+    
     service_account_name        = var.service_name
   }
+  create_kubernetes_namespace = true
 }
 
 resource "helm_release" "service_bot" {
