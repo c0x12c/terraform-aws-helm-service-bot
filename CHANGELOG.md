@@ -1,6 +1,10 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3.0]() (2025-12-12)
+
+### Version Updating
+* Increase `helm` version require for terraform, which may conflicts with other modules due to our modules are all `~> 3.0`.
 
 ## [0.2.0]() (2025-12-09)
 
