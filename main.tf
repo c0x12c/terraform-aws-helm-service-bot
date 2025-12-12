@@ -56,10 +56,11 @@ module "eks_service" {
       ATLASSIAN_API_TOKEN = var.atlassian_api_token
     }
 
-    create_service_account      = true
-    create_kubernetes_namespace = true
-    service_account_name        = var.service_name
+    create_service_account = true
+
+    service_account_name = var.service_name
   }
+  create_kubernetes_namespace = true
 }
 
 resource "helm_release" "service_bot" {
