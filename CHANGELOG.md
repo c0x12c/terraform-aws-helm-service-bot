@@ -1,6 +1,22 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [0.5.0]() (2025-12-16)
+
+### Features
+
+* Migrated from GitHub Personal Access Token (PAT) to GitHub App authentication for improved security and permissions management.
+
+### Refactoring
+
+* Replaced `github_login` and `github_pat` variables with `github_app_id`, `github_app_installation_id`, and `github_app_private_key` for GitHub App authentication.
+* Updated default service bot image tag to `v0.2.0`.
+
+### Breaking Changes
+
+* **GitHub Authentication**: The module now requires GitHub App credentials instead of PAT. Users must update their configuration to provide `github_app_id`, `github_app_installation_id`, and `github_app_private_key` instead of `github_login` and `github_pat`.
+
 ## [0.4.0]() (2025-12-12)
 
 ### Fix Bugs

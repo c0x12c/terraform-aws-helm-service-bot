@@ -62,13 +62,18 @@ variable "app_repo_list" {
   type        = list(string)
 }
 
-variable "github_login" {
-  description = "GitHub login"
+variable "github_app_id" {
+  description = "GitHub App ID"
   type        = string
 }
 
-variable "github_pat" {
-  description = "GitHub personal access token"
+variable "github_app_installation_id" {
+  description = "GitHub App Installation ID"
+  type        = string
+}
+
+variable "github_app_private_key" {
+  description = "GitHub App private key"
   type        = string
   sensitive   = true
 }
