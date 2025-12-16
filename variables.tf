@@ -19,7 +19,7 @@ variable "service_bot_image_repository" {
 variable "service_bot_image_tag" {
   description = "Docker image tag for the service bot"
   type        = string
-  default     = "v0.1.0"
+  default     = "v0.2.0"
 }
 
 variable "service_resources" {
@@ -141,21 +141,26 @@ variable "app_repo_list" {
   type        = list(string)
 }
 
+variable "github_app_id" {
+  description = "GitHub App ID"
+  type        = string
+}
+
+variable "github_app_installation_id" {
+  description = "GitHub App Installation ID"
+  type        = string
+}
+
+variable "github_app_private_key" {
+  description = "GitHub App private key"
+  type        = string
+  sensitive   = true
+}
+
 variable "infra_repo_list" {
   description = "List of infrastructure repositories"
   type        = list(string)
   default     = []
-}
-
-variable "github_login" {
-  description = "GitHub login"
-  type        = string
-}
-
-variable "github_pat" {
-  description = "GitHub personal access token"
-  type        = string
-  sensitive   = true
 }
 
 # Atlassian & On-Call

@@ -43,9 +43,10 @@ terraform apply
 | <a name="input_atlassian_username"></a> [atlassian\_username](#input\_atlassian\_username) | Atlassian username | `string` | n/a | yes |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | The name of the EKS cluster | `string` | n/a | yes |
 | <a name="input_eks_oidc_provider"></a> [eks\_oidc\_provider](#input\_eks\_oidc\_provider) | The OIDC provider for the EKS cluster | `object({ arn = string, url = string })` | n/a | yes |
-| <a name="input_github_login"></a> [github\_login](#input\_github\_login) | GitHub login | `string` | n/a | yes |
+| <a name="input_github_app_id"></a> [github\_app\_id](#input\_github\_app\_id) | GitHub App ID | `string` | n/a | yes |
+| <a name="input_github_app_installation_id"></a> [github\_app\_installation\_id](#input\_github\_app\_installation\_id) | GitHub App Installation ID | `string` | n/a | yes |
+| <a name="input_github_app_private_key"></a> [github\_app\_private\_key](#input\_github\_app\_private\_key) | GitHub App private key | `string` | n/a | yes |
 | <a name="input_github_org"></a> [github\_org](#input\_github\_org) | GitHub organization name | `string` | n/a | yes |
-| <a name="input_github_pat"></a> [github\_pat](#input\_github\_pat) | GitHub personal access token | `string` | n/a | yes |
 | <a name="input_jenkins_api_token"></a> [jenkins\_api\_token](#input\_jenkins\_api\_token) | Jenkins API token | `string` | n/a | yes |
 | <a name="input_jenkins_username"></a> [jenkins\_username](#input\_jenkins\_username) | Jenkins username | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | `"us-east-1"` | no |

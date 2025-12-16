@@ -17,7 +17,7 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     host                   = data.aws_eks_cluster.cluster.endpoint
     cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
     token                  = data.aws_eks_cluster_auth.cluster.token
@@ -25,7 +25,8 @@ provider "helm" {
 }
 
 module "service_bot" {
-  source = "../../"
+  source      = "../../"
+  environment = "dev"
 
   cluster_name      = var.cluster_name
   eks_oidc_provider = var.eks_oidc_provider
@@ -39,12 +40,14 @@ module "service_bot" {
   slack_user_token      = var.slack_user_token
   slack_bot_user_id     = var.slack_bot_user_id
   allowed_slack_channel = var.allowed_slack_channel
+  slack_channel_prefix  = "prj-"
 
   # GitHub
-  github_org    = var.github_org
-  app_repo_list = var.app_repo_list
-  github_login  = var.github_login
-  github_pat    = var.github_pat
+  github_org                 = var.github_org
+  app_repo_list              = var.app_repo_list
+  github_app_id              = var.github_app_id
+  github_app_installation_id = var.github_app_installation_id
+  github_app_private_key     = var.github_app_private_key
 
   # Jenkins
   jenkins_username  = var.jenkins_username

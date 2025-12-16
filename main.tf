@@ -48,8 +48,9 @@ module "eks_service" {
       SLACK_BOT_TOKEN      = var.slack_bot_token
       SLACK_USER_TOKEN     = var.slack_user_token
 
-      GITHUB_LOGIN = var.github_login
-      GITHUB_PAT   = var.github_pat
+      GITHUB_APP_ID              = var.github_app_id
+      GITHUB_APP_INSTALLATION_ID = var.github_app_installation_id
+      GITHUB_APP_PRIVATE_KEY     = var.github_app_private_key
 
       # optional secrets
       JENKINS_API_TOKEN   = var.jenkins_api_token
