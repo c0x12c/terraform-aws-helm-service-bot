@@ -19,7 +19,7 @@ variable "service_bot_image_repository" {
 variable "service_bot_image_tag" {
   description = "Docker image tag for the service bot"
   type        = string
-  default     = "v0.2.0"
+  default     = "v0.3.0"
 }
 
 variable "service_resources" {
