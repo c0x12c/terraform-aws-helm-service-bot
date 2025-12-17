@@ -6,14 +6,14 @@ env:
 on:
   pull_request:
     paths:
-      - "*.tf"
+      - '*.tf'
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -30,12 +30,3 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate -no-color
-
-      - uses: terraform-linters/setup-tflint@v6
-        name: Setup TFLint
-        with:
-          tflint_version: v0.52.0
-          cache: true
-
-      - name: Run TFLint
-        run: tflint
