@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0]() (2025-12-17)
+
+### Chore
+
+* Updated default service bot image tag to `v0.3.0`.
+
 ## [0.5.0]() (2025-12-16)
 
 ### Features
