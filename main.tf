@@ -64,6 +64,15 @@ module "eks_service" {
   create_kubernetes_namespace = true
 }
 
+locals {
+  general_probe = {
+    httpGet = {
+      path = "/health"
+      port = 8080
+    }
+  }
+}
+
 resource "helm_release" "service_bot" {
   name       = var.service_name
   repository = "https://spartan-stratos.github.io/helm-charts"
@@ -91,16 +100,9 @@ resource "helm_release" "service_bot" {
       }
 
       ingress = {
-        enabled   = true
-        className = "alb"
-        annotations = {
-          "alb.ingress.kubernetes.io/scheme"           = "internet-facing"
-          "alb.ingress.kubernetes.io/group.name"       = "external"
-          "kubernetes.io/ingress.class"                = "alb"
-          "alb.ingress.kubernetes.io/target-type"      = "ip"
-          "alb.ingress.kubernetes.io/healthcheck-path" = "/api/v1/health-check"
-          "alb.ingress.kubernetes.io/listen-ports"     = jsonencode([{ HTTP = 80 }, { HTTPS = 443 }])
-        }
+        enabled     = var.ingress_enabled
+        className   = var.ingress_class
+        annotations = var.ingress_annotations
 
         hosts = [
           {
@@ -117,18 +119,9 @@ resource "helm_release" "service_bot" {
 
       resources = var.service_resources
 
-      livenessProbe = {
-        httpGet = {
-          path = "/health"
-          port = 8080
-        }
-      }
-      readinessProbe = {
-        httpGet = {
-          path = "/health"
-          port = 8080
-        }
-      }
+      livenessProbe  = merge(local.general_probe, var.liveness_probe)
+      readinessProbe = merge(local.general_probe, var.readiness_probe)
+      startupProbe   = var.startup_probe != null ? merge(local.general_probe, var.startup_probe) : null
 
       autoscaling = {
         enabled = false
@@ -140,6 +133,8 @@ resource "helm_release" "service_bot" {
           name    = "${var.service_name}-config-map"
         }
       }
+
+      nodeSelector = var.node_selector
 
       secret = {
         externalSecretEnv = {
