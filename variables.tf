@@ -238,3 +238,77 @@ variable "jenkins_repository" {
   type        = string
   default     = "jenkins-job-dsl-scripts"
 }
+
+variable "ingress_enabled" {
+  description = "Whether to enable ingress"
+  type        = bool
+  default     = true
+}
+
+variable "ingress_class" {
+  description = "Ingress class to use"
+  type        = string
+  default     = "alb"
+}
+
+variable "ingress_annotations" {
+  description = "Additional ingress annotations"
+  type        = map(string)
+  default = {
+    "alb.ingress.kubernetes.io/scheme"           = "internet-facing"
+    "alb.ingress.kubernetes.io/group.name"       = "external"
+    "kubernetes.io/ingress.class"                = "alb"
+    "alb.ingress.kubernetes.io/target-type"      = "ip"
+    "alb.ingress.kubernetes.io/healthcheck-path" = "/health"
+    "alb.ingress.kubernetes.io/listen-ports"     = "[{\"HTTP\":80},{\"HTTPS\":443}]"
+  }
+}
+
+variable "liveness_probe" {
+  description = "Liveness probe configuration"
+  type = object({
+    initialDelaySeconds = number
+    periodSeconds       = number
+    timeoutSeconds      = number
+    failureThreshold    = number
+  })
+  default = {
+    initialDelaySeconds = 60
+    periodSeconds       = 30
+    timeoutSeconds      = 5
+    failureThreshold    = 3
+  }
+}
+
+variable "readiness_probe" {
+  description = "Readiness probe configuration"
+  type = object({
+    initialDelaySeconds = number
+    periodSeconds       = number
+    timeoutSeconds      = number
+    failureThreshold    = number
+  })
+  default = {
+    initialDelaySeconds = 60
+    periodSeconds       = 30
+    timeoutSeconds      = 5
+    failureThreshold    = 3
+  }
+}
+
+variable "startup_probe" {
+  description = "Startup probe configuration"
+  type = object({
+    initialDelaySeconds = number
+    periodSeconds       = number
+    timeoutSeconds      = number
+    failureThreshold    = number
+  })
+  default = null
+}
+
+variable "node_selector" {
+  description = "Node selector for the service bot pod"
+  type        = map(string)
+  default     = {}
+}

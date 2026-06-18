@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0]() (2025-12-29)
+
+### Features
+
+* Added configurable health probe support with `liveness_probe`, `readiness_probe`, and `startup_probe` variables for better pod lifecycle management.
+* Added ingress configuration variables (`ingress_enabled`, `ingress_class`, `ingress_annotations`) for flexible ingress setup.
+* Added `node_selector` variable to allow pod scheduling on specific nodes.
+
 ## [0.6.1]() (2025-12-17)
 
 ### Chore

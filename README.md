@@ -17,7 +17,7 @@ This Terraform module deploys a Service Bot on AWS EKS using Helm. The Service B
 ```hcl
 module "service_bot" {
   source  = "c0x12c/helm-service-bot/aws"
-  version = "0.4.0"
+  version = "0.7.0"
 
   cluster_name      = "my-eks-cluster"
   eks_oidc_provider = {
@@ -111,19 +111,25 @@ Refer to the [complete example](examples/complete) for a full implementation inc
 | <a name="input_github_org"></a> [github\_org](#input\_github\_org) | GitHub organization name | `string` | n/a | yes |
 | <a name="input_http_client_log_level"></a> [http\_client\_log\_level](#input\_http\_client\_log\_level) | HTTP client log level | `string` | `"INFO"` | no |
 | <a name="input_infra_repo_list"></a> [infra\_repo\_list](#input\_infra\_repo\_list) | List of infrastructure repositories | `list(string)` | `[]` | no |
+| <a name="input_ingress_annotations"></a> [ingress\_annotations](#input\_ingress\_annotations) | Additional ingress annotations | `map(string)` | <pre>{<br/>  "alb.ingress.kubernetes.io/group.name": "external",<br/>  "alb.ingress.kubernetes.io/healthcheck-path": "/health",<br/>  "alb.ingress.kubernetes.io/listen-ports": "[{\"HTTP\":80},{\"HTTPS\":443}]",<br/>  "alb.ingress.kubernetes.io/scheme": "internet-facing",<br/>  "alb.ingress.kubernetes.io/target-type": "ip",<br/>  "kubernetes.io/ingress.class": "alb"<br/>}</pre> | no |
+| <a name="input_ingress_class"></a> [ingress\_class](#input\_ingress\_class) | Ingress class to use | `string` | `"alb"` | no |
+| <a name="input_ingress_enabled"></a> [ingress\_enabled](#input\_ingress\_enabled) | Whether to enable ingress | `bool` | `true` | no |
 | <a name="input_jenkins_api_token"></a> [jenkins\_api\_token](#input\_jenkins\_api\_token) | Jenkins API token | `string` | `null` | no |
 | <a name="input_jenkins_host"></a> [jenkins\_host](#input\_jenkins\_host) | Jenkins host URL | `string` | `"https://jenkins.example.com"` | no |
 | <a name="input_jenkins_repository"></a> [jenkins\_repository](#input\_jenkins\_repository) | Jenkins repository | `string` | `"jenkins-job-dsl-scripts"` | no |
 | <a name="input_jenkins_username"></a> [jenkins\_username](#input\_jenkins\_username) | Jenkins username | `string` | `"spartan"` | no |
+| <a name="input_liveness_probe"></a> [liveness\_probe](#input\_liveness\_probe) | Liveness probe configuration | <pre>object({<br/>    initialDelaySeconds = number<br/>    periodSeconds       = number<br/>    timeoutSeconds      = number<br/>    failureThreshold    = number<br/>  })</pre> | <pre>{<br/>  "failureThreshold": 3,<br/>  "initialDelaySeconds": 60,<br/>  "periodSeconds": 30,<br/>  "timeoutSeconds": 5<br/>}</pre> | no |
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | The namespace to deploy the service | `string` | `"service-bot"` | no |
+| <a name="input_node_selector"></a> [node\_selector](#input\_node\_selector) | Node selector for the service bot pod | `map(string)` | `{}` | no |
 | <a name="input_on_call_page_id"></a> [on\_call\_page\_id](#input\_on\_call\_page\_id) | On-call page ID | `string` | `"48660500"` | no |
 | <a name="input_on_call_process_page_id"></a> [on\_call\_process\_page\_id](#input\_on\_call\_process\_page\_id) | On-call process page ID | `string` | `"41812488"` | no |
 | <a name="input_on_call_slack_channel"></a> [on\_call\_slack\_channel](#input\_on\_call\_slack\_channel) | On-call Slack channel | `string` | `"on-call"` | no |
 | <a name="input_on_call_template_page_id"></a> [on\_call\_template\_page\_id](#input\_on\_call\_template\_page\_id) | On-call template page ID | `string` | `"30736481"` | no |
+| <a name="input_readiness_probe"></a> [readiness\_probe](#input\_readiness\_probe) | Readiness probe configuration | <pre>object({<br/>    initialDelaySeconds = number<br/>    periodSeconds       = number<br/>    timeoutSeconds      = number<br/>    failureThreshold    = number<br/>  })</pre> | <pre>{<br/>  "failureThreshold": 3,<br/>  "initialDelaySeconds": 60,<br/>  "periodSeconds": 30,<br/>  "timeoutSeconds": 5<br/>}</pre> | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS region | `string` | n/a | yes |
 | <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | Route53 hosted zone ID | `string` | n/a | yes |
 | <a name="input_service_bot_image_repository"></a> [service\_bot\_image\_repository](#input\_service\_bot\_image\_repository) | Docker image for the service bot | `string` | `"ghcr.io/spartan-stratos/service-bot"` | no |
-| <a name="input_service_bot_image_tag"></a> [service\_bot\_image\_tag](#input\_service\_bot\_image\_tag) | Docker image tag for the service bot | `string` | `"v0.2.0"` | no |
+| <a name="input_service_bot_image_tag"></a> [service\_bot\_image\_tag](#input\_service\_bot\_image\_tag) | Docker image tag for the service bot | `string` | `"v0.3.0"` | no |
 | <a name="input_service_name"></a> [service\_name](#input\_service\_name) | The name of the service | `string` | `"service-bot"` | no |
 | <a name="input_service_resources"></a> [service\_resources](#input\_service\_resources) | Kubernetes resource requests and limits for the service bot | `map(map(string))` | <pre>{<br/>  "limits": {<br/>    "memory": "1Gi"<br/>  },<br/>  "requests": {<br/>    "cpu": "200m",<br/>    "memory": "1Gi"<br/>  }<br/>}</pre> | no |
 | <a name="input_slack_bot_token"></a> [slack\_bot\_token](#input\_slack\_bot\_token) | Slack bot token | `string` | n/a | yes |
@@ -134,6 +140,7 @@ Refer to the [complete example](examples/complete) for a full implementation inc
 | <a name="input_slack_user_token"></a> [slack\_user\_token](#input\_slack\_user\_token) | Slack user token | `string` | n/a | yes |
 | <a name="input_space_id"></a> [space\_id](#input\_space\_id) | Confluence Space ID | `string` | `"12779524"` | no |
 | <a name="input_spartan_chart_version"></a> [spartan\_chart\_version](#input\_spartan\_chart\_version) | Version of the Spartan Helm chart to deploy | `string` | `"0.1.18"` | no |
+| <a name="input_startup_probe"></a> [startup\_probe](#input\_startup\_probe) | Startup probe configuration | <pre>object({<br/>    initialDelaySeconds = number<br/>    periodSeconds       = number<br/>    timeoutSeconds      = number<br/>    failureThreshold    = number<br/>  })</pre> | `null` | no |
 
 ## Outputs
 
